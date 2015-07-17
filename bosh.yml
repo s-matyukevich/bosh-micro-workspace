@@ -58,7 +58,7 @@ jobs:
     static_ips: [SUBNET_PREFIX.6]
     default: [dns, gateway]
   - name: public
-    static_ips: [ELASTIC-IP] # <--- Replace with Elastic IP
+    static_ips: [ELASTIC_IP] # <--- Replace with Elastic IP
 
   properties:
     nats:
@@ -125,7 +125,7 @@ cloud_provider:
     user: vcap
     private_key: ./bosh.pem # Path relative to this manifest file
 
-  mbus: "https://mbus:mbus-password@ELASTIC-IP:6868" # <--- Replace with Elastic IP
+  mbus: "https://mbus:mbus-password@ELASTIC_IP:6868" # <--- Replace with Elastic IP
 
   properties:
     aws: *aws
