@@ -18,7 +18,7 @@ resource_pools:
   cloud_properties:
     instance_type: m3.xlarge
     ephemeral_disk: {size: 25_000, type: gp2}
-    availability_zone: AVAILABILITY-ZONE # <--- Replace with Availability Zone
+    availability_zone: AVAILABILITY_ZONE # <--- Replace with Availability Zone
 
 disk_pools:
 - name: disks
@@ -29,10 +29,10 @@ networks:
 - name: private
   type: manual
   subnets:
-  - range: SUBNET-PREFIX.0/24
-    gateway: SUBNET-PREFIX.1
-    dns: [SUBNET-PREFIX.2]
-    cloud_properties: {subnet: SUBNET-ID} # <--- Replace with Subnet ID
+  - range: SUBNET_PREFIX.0/24
+    gateway: SUBNET_PREFIX.1
+    dns: [SUBNET_PREFIX.2]
+    cloud_properties: {subnet: SUBNET_ID} # <--- Replace with Subnet ID
 - name: public
   type: vip
 
@@ -55,7 +55,7 @@ jobs:
 
   networks:
   - name: private
-    static_ips: [SUBNET-PREFIX.6]
+    static_ips: [SUBNET_PREFIX.6]
     default: [dns, gateway]
   - name: public
     static_ips: [ELASTIC-IP] # <--- Replace with Elastic IP
@@ -79,8 +79,8 @@ jobs:
       adapter: postgres
 
     registry:
-      address: SUBNET-PREFIX.6
-      host: SUBNET-PREFIX.6
+      address: SUBNET_PREFIX.6
+      host: SUBNET_PREFIX.6
       db: *db
       http: {user: admin, password: admin, port: 25777}
       username: admin
@@ -88,7 +88,7 @@ jobs:
       port: 25777
 
     blobstore:
-      address: SUBNET-PREFIX.6
+      address: SUBNET_PREFIX.6
       port: 25250
       provider: dav
       director: {user: director, password: director-password}
@@ -106,13 +106,13 @@ jobs:
       resurrector_enabled: true
 
     aws: &aws
-      access_key_id: ACCESS-KEY-ID # <--- Replace with AWS Access Key ID
-      secret_access_key: SECRET-ACCESS-KEY # <--- Replace with AWS Secret Key
+      access_key_id:  AWS_KEY_ID # <--- Replace with AWS Access Key ID
+      secret_access_key: AWS_ACCESS_KEY # <--- Replace with AWS Secret Key
       default_key_name: AWS_KEY
       default_security_groups: [AWS_SECURITY_GROUP]
       region: AWS_REGION 
 
-    agent: {mbus: "nats://nats:nats-password@SUBNET-PREFIX.6:4222"}
+    agent: {mbus: "nats://nats:nats-password@SUBNET_PREFIX.6:4222"}
 
     ntp: &ntp [0.pool.ntp.org, 1.pool.ntp.org]
 
@@ -120,7 +120,7 @@ cloud_provider:
   template: {name: cpi, release: bosh-aws-cpi}
 
   ssh_tunnel:
-    host: ELASTIC-IP # <--- Replace with your Elastic IP address
+    host: ELASTIC_IP # <--- Replace with your Elastic IP address
     port: 22
     user: vcap
     private_key: ./bosh.pem # Path relative to this manifest file
