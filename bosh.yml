@@ -31,7 +31,7 @@ networks:
   subnets:
   - range: SUBNET_PREFIX.0/24
     gateway: SUBNET_PREFIX.1
-    dns: [SUBNET_PREFIX.2]
+    dns: [IPMASK.0.2]
     cloud_properties: {subnet: SUBNET_ID} # <--- Replace with Subnet ID
 - name: public
   type: vip
